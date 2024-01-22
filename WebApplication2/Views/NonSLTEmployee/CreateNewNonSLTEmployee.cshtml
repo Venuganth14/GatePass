@@ -1,0 +1,45 @@
+﻿@model GatePass_Project.Models.NonSLTEmployeeModel
+
+@{
+    ViewData["Title"] = "Add New Non SLT Employees";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<div class="container">
+
+
+    <!-- Add Location Section -->
+    <div class="nonslt-form">
+        <form method="post" asp-action="NewNonSLTEmployee" enctype="application/json" asp-controller="NonSLTEmployee" class="mx-auto d-block" style="width: 50%;">
+            <div class="row mb-3">
+                <label for="inputName" class="col-sm-3 col-form-label" style="white-space: nowrap;">Employee Name</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                           name="Non_slt_name"
+                           class="form-control"
+                           placeholder="Enter Name Here" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputroleid" class="col-sm-3 col-form-label" style="white-space: nowrap;">Employee Role</label>
+                <div class="col-sm-9">
+                    @Html.DropDownListFor(model => model.Role_id, ViewBag.Roles as SelectList, "Select Role", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <label for="inputNIC" class="col-sm-3 col-form-label" style="white-space: nowrap;">Employee NIC</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                           name="NIC"
+                           class="form-control"
+                           placeholder="Enter NIC number Here" />
+                </div>
+            </div>
+            <button type="submit" class='btn btn-primary'>Submit</button>
+        </form>
+    </div>
+
+    <a asp-action="NonSLTEmployee">Back to List</a>
+</div>

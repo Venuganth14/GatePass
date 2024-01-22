@@ -1,0 +1,57 @@
+﻿@model GatePass_Project.Models.ItemCategoryModel
+
+@{
+    ViewData["Title"] = "Create New Category";
+}
+
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <!-- Add Multiple Categories Section -->
+    <div class="item-form" style="margin-bottom: 20px">
+        <form method="post" asp-action="UploadCsv" enctype="multipart/form-data" asp-controller="ItemCategory" class="mx-auto d-block" style="width: 50%;">
+            <div class="row mb-3">
+                <label for="file-upload" class="col-sm-3 col-form-label" style="white-space: nowrap">Choose File</label>
+                <div class="col-sm-9">
+                    <input type="file"
+                           name="csvFile"
+                           accept=".csv"
+                           class="form-control"
+                           id="file-upload"
+                           placeholder="Upload Csv Here" />
+                </div>
+            </div>
+            <button type="submit" class='btn btn-primary'>Submit CSV</button>
+        </form>
+    </div>
+
+    <!-- Add Category Section -->
+    <div class="item-form">
+        <form method="post" asp-action="AddItemCategory" asp-controller="ItemCategory" class="mx-auto d-block" style="width: 50%;">
+            <div class="row mb-3">
+                <label for="inputCategoryName" class="col-sm-3 col-form-label" style="white-space: nowrap;">Category Name</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                           name="Category_name"
+                           class="form-control"
+                           placeholder="Enter Item Category Here" />
+                </div>
+            </div>
+            <div class="row mb-3">
+                <label for="inputCategoryType" class="col-sm-3 col-form-label" style="white-space: nowrap;">Category Type</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                           name="Category_type"
+                           class="form-control"
+                           placeholder="Enter Category Type Here" />
+                </div>
+
+            </div>
+            <button type="submit" class='btn btn-primary'>Submit</button>
+        </form>
+    </div>
+
+
+    <a asp-action="ItemCategory">Back to List</a>
+</div>

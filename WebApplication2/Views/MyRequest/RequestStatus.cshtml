@@ -1,0 +1,22 @@
+﻿@model GatePass_Project.Models.MyRequestModel
+
+@{
+    ViewData["Title"] = "Request Status";
+}
+
+<div class="text-center">
+    <h1 class="display-4" style="font-size: 30px;">Request Status</h1>
+</div>
+<br></br>
+
+<div class="container">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title custom-font">Ref. No: @Model.Request_ref_no</h5>
+
+            <p class="card-text custom-font">Progress Status: @Model.Progress_status</p>
+
+            <a asp-action="MyRequest">Back to List</a>
+        </div>
+    </div>
+</div>

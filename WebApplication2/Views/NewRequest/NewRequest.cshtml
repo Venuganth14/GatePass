@@ -1,0 +1,1349 @@
+﻿@{
+    ViewData["Title"] = "New Request Page";
+}
+
+
+<div class="text-center page-title">
+    <h1 class="display-4" style="font-size: 30px;">New Request</h1>
+
+</div>
+
+<br>
+
+<form asp-action="SaveRequest" method="post">
+
+
+    <!-- Sender Details -->
+
+    <div class="box">
+        <h5>Sender Details</h5>
+        
+        <form id="senderDetailsForm">
+
+            <div class="form-group">
+                <label for="senderServiceNo">Service No</label>
+                <input type="text" class="form-control" id="senderServiceNo" name="senderServiceNo" onchange="fetchSenderDetails()">
+                
+            </div>
+
+            <div class="form-group">
+                <label for="senderSection">Section</label>
+                <input type="text" class="form-control" id="senderSection" name="senderSection" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="senderName">Name</label>
+                <input type="text" class="form-control" id="senderName" name="senderName" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="senderGroup">Group</label>
+                <input type="text" class="form-control" id="senderGroup" name="senderGroup" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="senderDesignation">Designation</label>
+                <input type="text" class="form-control" id="senderDesignation" name="senderDesignation" readonly>
+            </div>
+
+            <div class="form-group">
+                <label for="senderContactNo">Contact No</label>
+                <input type="text" class="form-control" id="senderContactNo" name="senderContactNo" readonly>
+            </div>
+
+            <div class="form-group">
+                <br>
+                <button type="button" class="btn btn-warning" id="clearSenderDetails" onclick="clearErrorMessage()">Clear</button>
+            </div>
+
+        </form>
+        
+    </div>
+
+    <div>
+        <br>
+    </div>
+
+
+    <!-- Carrier Details -->
+
+    
+    <div class="box">
+        <h5>Carrier Details</h5>
+        <button type="button" class="btn btn-primary" onclick="toggleCarrierDetailsForm()">Add Carrier Details</button>
+        <div><br></div>
+    <div>
+
+        <form id="careerDetailsForm" style="display:none">
+
+            <div class="form-group">
+                <label for="carrierName">Carrier Name</label>
+                <input type="text" class="form-control" id="carrierName" name="carrierName">
+            </div>
+
+            <div class="form-group">
+                <label for="carrierNicNo">NIC No</label>
+                    <input type="text" class="form-control" id="carrierNicNo" name="carrierNicNo" oninput="validateNICOnInput()">
+                    <span id="nicValidationMessage" style="color: red;"></span>
+            </div>
+
+            <div class="form-group">
+                <label for="carrierContactNo">Contact No</label>
+                    <input type="text" class="form-control" id="carrierContactNo" name="carrierContactNo" oninput="validateMobileOnInput()">
+                    <span id="mobileValidationMessage" style="color: red;"></span>
+            </div>
+
+            <div>
+                <br>
+                <button type="button" class="btn btn-danger" onclick="clearAndHideCarrierDetailsForm()">Remove</button>
+            </div>
+
+        </form>
+    </div>
+    </div>
+    <div>
+        <br>
+    </div>
+
+
+    <!-- Items Details -->
+
+    <div class="box">
+        <h5>Items Details</h5>
+
+
+        <table class="table" id="itemTable">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Item Name</th>
+                    <th>Photos</th>
+                    <th>Serial No</th>
+                    <th>Returnable</th>
+                    <th>Item Category</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                    
+                </tr>
+            </thead>
+            <tbody id="itemTableBody1">
+
+                <tr>
+                    <td>1</td>
+                    <td><input type="text" class="form-control" id="itemName1" name="itemName1" /></td>
+        
+        <td>
+                        <input type="file" class="form-control-file" id="itemPhotos1" name="itemPhotos1" onchange="displayImage(this)" />
+                        <img id="previewImage" src="#" alt="Preview Image" style="display: none; max-width: 300px; max-height: 300px;" />
+        </td>
+
+                    <td><input type="text" class="form-control" id="itemSerialNo1" name="itemSerialNo1" /></td>
+        <td>
+            <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableYes1" name="returnable1" value="Yes">
+                <label class="form-check-label">Yes</label>
+            </div>
+            <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableNo1" name="returnable1" value="No">
+                <label class="form-check-label">No</label>
+            </div>
+        </td>
+
+                    @*<td><input type="date" class="form-control" id="dueDate1" name="dueDate1" style="display: none;" /></td>*@
+        
+        <td>
+                        <select class="form-control" id="itemCategory1" name="itemCategory1">
+                            <option value="" disabled selected hidden>--- Select ---</option>
+                @foreach (var category in ViewBag.ItemCategories)
+                {
+                    <option value="@category">@category</option>
+                }
+            </select>
+        </td>
+
+                    <td><textarea class="form-control" id="itemDescription1" name="itemDescription1" rows="3"></textarea></td>
+        
+        <td>@*<button type="button" class="btn btn-danger" onclick="removeItemRow(this)">Remove</button>*@</td>
+        <td><button type="button" class="btn btn-primary" id="addItemButton" onclick="addItemRow2()">Add Item</button></td>
+    </tr>
+            </tbody>
+
+
+            
+
+            
+
+
+            <tbody id="itemTableBody2"></tbody>
+            <tbody id="itemTableBody3"></tbody>
+            <tbody id="itemTableBody4"></tbody>
+            <tbody id="itemTableBody5"></tbody>
+            <tbody id="itemTableBody6"></tbody>
+            <tbody id="itemTableBody7"></tbody>
+            <tbody id="itemTableBody8"></tbody>
+            <tbody id="itemTableBody9"></tbody>
+            <tbody id="itemTableBody10"></tbody>
+
+        </table>
+        
+        
+        <br>
+        <h6>Note I: If the items you enter here are returnable, they must be returned within 3 days.</h6>
+        <h6>Note II: Only 10 items can be entered here at once. </h6>
+
+        @*<button type="button" class="btn btn-primary" onclick="addItemRow()">Add Item</button>*@
+    </div>
+
+    <div>
+        <br>
+    </div>
+
+    
+
+    <!-- Location Details -->
+
+    <div class="box">
+        <h5>Location Details</h5>
+
+        <form id="locationDetailsForm">
+
+            <div class="form-group">
+                <label for="outLocation">Out Location</label>
+                <select class="form-control" id="outLocation" name="outLocation">
+                    <option value="" disabled selected hidden>--- Select ---</option>
+                    @foreach (var location in ViewBag.Locations)
+                    {
+                        <option value="@location">@location</option>
+                    }
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="sltInLocation">SLT In Location</label>
+                <select class="form-control" id="sltInLocation" name="sltInLocation">
+                    <option value="" disabled selected hidden>--- Select ---</option>
+                    @foreach (var location in ViewBag.Locations)
+                    {
+                        <option value="@location">@location</option>
+                    }
+                </select>
+            </div>
+
+           
+            <div class="form-group">
+                <label for="executiveOfficer">Select Executive Officer</label>
+                <select class="form-control" id="executiveOfficer" name="executiveOfficer">
+                    <option value="" disabled selected hidden>--- Select ---</option>
+                    @foreach (var officer in ViewBag.ExecutiveOfficers)
+                    {
+                        <option value="@officer">@officer</option>
+                    }
+                </select>
+            </div>
+
+        </form>
+    </div>
+
+    <div>
+        <br>
+    </div>
+
+    <!-- Receiver Details -->
+
+    <div class="box">
+        
+        <h2>Receiver Details</h2>
+
+        <form id="receiverDetailsForm">
+
+            <div class="form-group">
+                <label>Receiver Available</label>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="receiverAvailableYes" name="receiverAvailable" value="Yes">
+                    <label class="form-check-label" for="receiverAvailableYes">Yes</label>
+                </div>
+                <div class="form-check">
+                    <input type="radio" class="form-check-input" id="receiverAvailableNo" name="receiverAvailable" value="No">
+                    <label class="form-check-label" for="receiverAvailableNo">No</label>
+                </div>
+            </div>
+
+            <div id="receiverDetailsFields" style="display: none;">
+                <div class="form-group">
+                    <label for="receiverServiceNo">Service No</label>
+                    <input type="text" class="form-control" id="receiverServiceNo" name="receiverServiceNo" onchange="fetchReceiverDetails()">
+                </div>
+
+                <div class="form-group">
+                    <label for="receiverGroup">Group</label>
+                    <input type="text" class="form-control" id="receiverGroup" name="receiverGroup" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="receiverName">Name</label>
+                    <input type="text" class="form-control" id="receiverName" name="receiverName" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="receiverContactNo">Contact No</label>
+                    <input type="text" class="form-control" id="receiverContactNo" name="receiverContactNo" readonly>
+                </div>
+
+                <div class="form-group">
+                    <br>
+                    <button type="button" class="btn btn-warning" id="clearReceiverDetails">Clear</button>
+                </div>
+            </div>
+
+        </form>
+    </div>
+
+
+    <!-- Submit Form -->
+
+    <div class="container">
+        <div>
+            <br>
+            <button type="submit" class="btn btn-primary" style="font-size:20px" onclick="saveData()">Submit</button>
+            &nbsp; &nbsp; &nbsp; <a href="@Url.Action("Index", "Home")">
+                <b>&#171;</b>
+                Back to Home
+            </a>
+        </div>
+    </div>
+
+</form>
+
+
+
+
+@*### Script File in New Request Page ###*@
+
+<script>
+
+    
+    // # Sender Details #
+
+    // Function to fetch Sender Details and Filled out the form
+    // Sender Service No input and other fields are auto filled
+    function fetchSenderDetails() {
+        const serviceNo = document.getElementById("senderServiceNo").value;
+
+        $.ajax({
+            type: "GET",
+            url: `/NewRequest/GetSenderDetails?serviceNo=${serviceNo}`,
+            success: function (data) {
+
+                // Populate the form fields with Retrieved Data
+                document.getElementById("senderSection").value = data.section;
+                document.getElementById("senderName").value = data.name;
+                document.getElementById("senderGroup").value = data.group;
+                document.getElementById("senderDesignation").value = data.designation;
+                document.getElementById("senderContactNo").value = data.contactNo;
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    document.getElementById("senderServiceNo").addEventListener("change", fetchSenderDetails);
+
+
+    // Function to Clear Sender Details Form
+    function clearSenderDetailsFields() {
+        document.getElementById("senderServiceNo").value = "";
+        document.getElementById("senderSection").value = "";
+        document.getElementById("senderName").value = "";
+        document.getElementById("senderGroup").value = "";
+        document.getElementById("senderDesignation").value = "";
+        document.getElementById("senderContactNo").value = "";
+    }
+
+    document.getElementById("clearSenderDetails").addEventListener("click", clearSenderDetailsFields);
+
+
+    // # Carrier Details #
+
+    // Carrier Details Form Dispaly
+    // Click the 'Add Carrier Details' button Display the Carrier Details Form
+    function toggleCarrierDetailsForm() {
+        const carrierDetailsForm = document.getElementById("careerDetailsForm");
+        if (carrierDetailsForm.style.display === "none" || carrierDetailsForm.style.display === "") {
+            carrierDetailsForm.style.display = "block";
+        } else {
+            carrierDetailsForm.style.display = "none";
+        }
+    }
+
+    // Function to Remove Carrier Details Form
+    function clearAndHideCarrierDetailsForm() {
+        const carrierDetailsForm = document.getElementById("careerDetailsForm");
+        carrierDetailsForm.reset();
+        carrierDetailsForm.style.display = "none";
+    }
+
+
+    // # Items Details #
+
+    // Items Details of Returnable Items Field
+
+
+
+    // Update Due Date Group Display based on the Selected Radio Button
+    // Select Radio Button 'Yes' Display the Due Date
+    // Select Radio Button 'No' not Display the Due Date
+    document.addEventListener("DOMContentLoaded", function () {
+        const returnableYesRadio = document.getElementById("returnableYes");
+        const returnableNoRadio = document.getElementById("returnableNo");
+        const dueDateField = document.getElementById("dueDate");
+
+        returnableYesRadio.addEventListener("change", function () {
+            if (returnableYesRadio.checked) {
+                dueDateField.style.display = "block";
+            } else {
+                dueDateField.style.display = "none";
+            }
+        });
+
+        returnableNoRadio.addEventListener("change", function () {
+            if (returnableNoRadio.checked) {
+                dueDateField.style.display = "none";
+            }
+        });
+    });
+
+
+
+
+
+   
+
+     //item 2
+                function addItemRow2() {
+        const itemTableBody2 = document.getElementById("itemTableBody2");
+
+        itemTableBody2.innerHTML = "";
+
+        const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `            
+                <td>2</td>
+               
+                    <td><input type="text" class="form-control" id="itemName2" name="itemName2" /></td>
+
+                    <td>
+                        <input type="file" class="form-control-file" id="itemPhotos2" name="itemPhotos2" onchange="displayImage(this)" />
+                        <img id="previewImage" src="#" alt="Preview Image" style="display: none; max-width: 300px; max-height: 300px;" />
+                    </td>
+
+                    <td><input type="text" class="form-control" id="itemSerialNo2" name="itemSerialNo2" /></td>
+                    <td>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableYes2" name="returnable2" value="Yes">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableNo2" name="returnable2" value="No">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </td>
+
+                    @*<td><input type="date" class="form-control" id="dueDate2" name="dueDate2" style="display: none;" /></td>*@
+
+                    <td>
+                        <select class="form-control" id="itemCategory2" name="itemCategory2">
+                            <option value="" disabled selected hidden>--- Select ---</option>
+                            @foreach (var category in ViewBag.ItemCategories)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </td>
+
+                    <td><textarea class="form-control" id="itemDescription2" name="itemDescription2" rows="3"></textarea></td>
+
+                    <td><button type="button" class="btn btn-danger" onclick="removeItemRow(this)">Remove</button></td>
+
+                    <td><button type="button" class="btn btn-primary" id="addItemButton" onclick="addItemRow3()">Add Item</button></td>
+               
+            
+                `;
+                    itemTableBody2.appendChild(newRow);
+                }
+
+
+                //item 3
+                function addItemRow3() {
+        const itemTableBody3 = document.getElementById("itemTableBody3");
+
+        itemTableBody3.innerHTML = "";
+
+        const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `            
+                <td>3</td>
+               
+                    <td><input type="text" class="form-control" id="itemName3" name="itemName3" /></td>
+
+                    <td>
+                        <input type="file" class="form-control-file" id="itemPhotos3" name="itemPhotos3" onchange="displayImage(this)" />
+                        <img id="previewImage" src="#" alt="Preview Image" style="display: none; max-width: 300px; max-height: 300px;" />
+                    </td>
+
+                    <td><input type="text" class="form-control" id="itemSerialNo3" name="itemSerialNo3" /></td>
+                    <td>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableYes3" name="returnable3" value="Yes">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableNo3" name="returnable3" value="No">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </td>
+
+                    @*<td><input type="date" class="form-control" id="dueDate2" name="dueDate2" style="display: none;" /></td>*@
+
+                    <td>
+                        <select class="form-control" id="itemCategory3" name="itemCategory3">
+                            <option value="" disabled selected hidden>--- Select ---</option>
+                            @foreach (var category in ViewBag.ItemCategories)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </td>
+
+                    <td><textarea class="form-control" id="itemDescription3" name="itemDescription3" rows="3"></textarea></td>
+
+                    <td><button type="button" class="btn btn-danger" onclick="removeItemRow(this)">Remove</button></td>
+
+                    <td><button type="button" class="btn btn-primary" id="addItemButton" onclick="addItemRow4()">Add Item</button></td>
+               
+            
+                `;
+                    itemTableBody3.appendChild(newRow);
+                }
+
+
+                //item 4
+                function addItemRow4() {
+        const itemTableBody4 = document.getElementById("itemTableBody4");
+
+        itemTableBody4.innerHTML = "";
+
+        const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `            
+                
+               <td>4</td>
+                    <td><input type="text" class="form-control" id="itemName4" name="itemName4" /></td>
+
+                    <td>
+                        <input type="file" class="form-control-file" id="itemPhotos4" name="itemPhotos4" onchange="displayImage(this)" />
+                        <img id="previewImage" src="#" alt="Preview Image" style="display: none; max-width: 300px; max-height: 300px;" />
+                    </td>
+
+                    <td><input type="text" class="form-control" id="itemSerialNo4" name="itemSerialNo4" /></td>
+                    <td>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableYes4" name="returnable4" value="Yes">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableNo4" name="returnable4" value="No">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </td>
+
+                    @*<td><input type="date" class="form-control" id="dueDate2" name="dueDate2" style="display: none;" /></td>*@
+
+                    <td>
+                        <select class="form-control" id="itemCategory4" name="itemCategory4">
+                            <option value="" disabled selected hidden>--- Select ---</option>
+                            @foreach (var category in ViewBag.ItemCategories)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </td>
+
+                    <td><textarea class="form-control" id="itemDescription4" name="itemDescription4" rows="3"></textarea></td>
+
+                    <td><button type="button" class="btn btn-danger" onclick="removeItemRow(this)">Remove</button></td>
+
+                    <td><button type="button" class="btn btn-primary" id="addItemButton" onclick="addItemRow5()">Add Item</button></td>
+               
+            
+                `;
+                    itemTableBody4.appendChild(newRow);
+                }
+
+
+                //item 5
+                function addItemRow5() {
+        const itemTableBody5 = document.getElementById("itemTableBody5");
+
+        itemTableBody5.innerHTML = "";
+
+        const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `            
+                <td>5</td>
+               
+                    <td><input type="text" class="form-control" id="itemName5" name="itemName5" /></td>
+
+                    <td>
+                        <input type="file" class="form-control-file" id="itemPhotos5" name="itemPhotos5" onchange="displayImage(this)" />
+                        <img id="previewImage" src="#" alt="Preview Image" style="display: none; max-width: 300px; max-height: 300px;" />
+                    </td>
+
+                    <td><input type="text" class="form-control" id="itemSerialNo5" name="itemSerialNo5" /></td>
+                    <td>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableYes5" name="returnable5" value="Yes">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableNo5" name="returnable5" value="No">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </td>
+
+                    @*<td><input type="date" class="form-control" id="dueDate2" name="dueDate2" style="display: none;" /></td>*@
+
+                    <td>
+                        <select class="form-control" id="itemCategory5" name="itemCategory5">
+                            <option value="" disabled selected hidden>--- Select ---</option>
+                            @foreach (var category in ViewBag.ItemCategories)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </td>
+
+                    <td><textarea class="form-control" id="itemDescription5" name="itemDescription5" rows="3"></textarea></td>
+
+                    <td><button type="button" class="btn btn-danger" onclick="removeItemRow(this)">Remove</button></td>
+
+                    <td><button type="button" class="btn btn-primary" id="addItemButton" onclick="addItemRow6()">Add Item</button></td>
+               
+            
+                `;
+                    itemTableBody5.appendChild(newRow);
+                }
+
+
+                //item 6
+                function addItemRow6() {
+        const itemTableBody6 = document.getElementById("itemTableBody6");
+
+        itemTableBody6.innerHTML = "";
+
+        const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `            
+                <td>6</td>
+               
+                    <td><input type="text" class="form-control" id="itemName6" name="itemName6" /></td>
+
+                    <td>
+                        <input type="file" class="form-control-file" id="itemPhotos6" name="itemPhotos6" onchange="displayImage(this)" />
+                        <img id="previewImage" src="#" alt="Preview Image" style="display: none; max-width: 300px; max-height: 300px;" />
+                    </td>
+
+                    <td><input type="text" class="form-control" id="itemSerialNo6" name="itemSerialNo6" /></td>
+                    <td>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableYes6" name="returnable6" value="Yes">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableNo6" name="returnable6" value="No">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </td>
+
+                    @*<td><input type="date" class="form-control" id="dueDate2" name="dueDate2" style="display: none;" /></td>*@
+
+                    <td>
+                        <select class="form-control" id="itemCategory6" name="itemCategory6">
+                            <option value="" disabled selected hidden>--- Select ---</option>
+                            @foreach (var category in ViewBag.ItemCategories)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </td>
+
+                    <td><textarea class="form-control" id="itemDescription6" name="itemDescription6" rows="3"></textarea></td>
+
+                    <td><button type="button" class="btn btn-danger" onclick="removeItemRow(this)">Remove</button></td>
+
+                    <td><button type="button" class="btn btn-primary" id="addItemButton" onclick="addItemRow7()">Add Item</button></td>
+               
+            
+                `;
+                    itemTableBody6.appendChild(newRow);
+                }
+
+
+                //item 7
+                function addItemRow7() {
+        const itemTableBody7 = document.getElementById("itemTableBody7");
+
+        itemTableBody7.innerHTML = "";
+
+        const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `            
+                <td>7</td>
+               
+                    <td><input type="text" class="form-control" id="itemName7" name="itemName7" /></td>
+
+                    <td>
+                        <input type="file" class="form-control-file" id="itemPhotos7" name="itemPhotos7" onchange="displayImage(this)" />
+                        <img id="previewImage" src="#" alt="Preview Image" style="display: none; max-width: 300px; max-height: 300px;" />
+                    </td>
+
+                    <td><input type="text" class="form-control" id="itemSerialNo7" name="itemSerialNo7" /></td>
+                    <td>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableYes7" name="returnable7" value="Yes">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableNo7" name="returnable7" value="No">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </td>
+
+                    @*<td><input type="date" class="form-control" id="dueDate2" name="dueDate2" style="display: none;" /></td>*@
+
+                    <td>
+                        <select class="form-control" id="itemCategory7" name="itemCategory7">
+                            <option value="" disabled selected hidden>--- Select ---</option>
+                            @foreach (var category in ViewBag.ItemCategories)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </td>
+
+                    <td><textarea class="form-control" id="itemDescription7" name="itemDescription7" rows="3"></textarea></td>
+
+                    <td><button type="button" class="btn btn-danger" onclick="removeItemRow(this)">Remove</button></td>
+
+                    <td><button type="button" class="btn btn-primary" id="addItemButton" onclick="addItemRow8()">Add Item</button></td>
+               
+            
+                `;
+                    itemTableBody7.appendChild(newRow);
+                }
+
+
+                //item 8
+                function addItemRow8() {
+        const itemTableBody8 = document.getElementById("itemTableBody8");
+
+        itemTableBody8.innerHTML = "";
+
+        const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `            
+                <td>8</td>
+               
+                    <td><input type="text" class="form-control" id="itemName8" name="itemName8" /></td>
+
+                    <td>
+                        <input type="file" class="form-control-file" id="itemPhotos8" name="itemPhotos8" onchange="displayImage(this)" />
+                        <img id="previewImage" src="#" alt="Preview Image" style="display: none; max-width: 300px; max-height: 300px;" />
+                    </td>
+
+                    <td><input type="text" class="form-control" id="itemSerialNo8" name="itemSerialNo8" /></td>
+                    <td>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableYes8" name="returnable8" value="Yes">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableNo8" name="returnable8" value="No">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </td>
+
+                    @*<td><input type="date" class="form-control" id="dueDate2" name="dueDate2" style="display: none;" /></td>*@
+
+                    <td>
+                        <select class="form-control" id="itemCategory8" name="itemCategory8">
+                            <option value="" disabled selected hidden>--- Select ---</option>
+                            @foreach (var category in ViewBag.ItemCategories)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </td>
+
+                    <td><textarea class="form-control" id="itemDescription8" name="itemDescription8" rows="3"></textarea></td>
+
+                    <td><button type="button" class="btn btn-danger" onclick="removeItemRow(this)">Remove</button></td>
+
+                    <td><button type="button" class="btn btn-primary" id="addItemButton" onclick="addItemRow9()">Add Item</button></td>
+               
+            
+                `;
+                    itemTableBody8.appendChild(newRow);
+                }
+
+
+
+                //item 9
+                function addItemRow9() {
+        const itemTableBody9 = document.getElementById("itemTableBody9");
+
+        itemTableBody9.innerHTML = "";
+
+        const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `            
+                <td>9</td>
+               
+                    <td><input type="text" class="form-control" id="itemName9" name="itemName9" /></td>
+
+                    <td>
+                        <input type="file" class="form-control-file" id="itemPhotos9" name="itemPhotos9" onchange="displayImage(this)" />
+                        <img id="previewImage" src="#" alt="Preview Image" style="display: none; max-width: 300px; max-height: 300px;" />
+                    </td>
+
+                    <td><input type="text" class="form-control" id="itemSerialNo9" name="itemSerialNo9" /></td>
+                    <td>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableYes9" name="returnable9" value="Yes">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableNo9" name="returnable9" value="No">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </td>
+
+                    @*<td><input type="date" class="form-control" id="dueDate2" name="dueDate2" style="display: none;" /></td>*@
+
+                    <td>
+                        <select class="form-control" id="itemCategory9" name="itemCategory9">
+                            <option value="" disabled selected hidden>--- Select ---</option>
+                            @foreach (var category in ViewBag.ItemCategories)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </td>
+
+                    <td><textarea class="form-control" id="itemDescription9" name="itemDescription9" rows="3"></textarea></td>
+
+                    <td><button type="button" class="btn btn-danger" onclick="removeItemRow(this)">Remove</button></td>
+
+                    <td><button type="button" class="btn btn-primary" id="addItemButton" onclick="addItemRow10()">Add Item</button></td>
+               
+            
+                `;
+                    itemTableBody9.appendChild(newRow);
+                }
+
+
+
+
+                //item 10
+                function addItemRow10() {
+        const itemTableBody10 = document.getElementById("itemTableBody10");
+
+        itemTableBody10.innerHTML = "";
+
+        const newRow = document.createElement("tr");
+
+            newRow.innerHTML = `            
+                
+               <td>10</td>
+                    <td><input type="text" class="form-control" id="itemName10" name="itemName10" /></td>
+
+                    <td>
+                        <input type="file" class="form-control-file" id="itemPhotos10" name="itemPhotos10" onchange="displayImage(this)" />
+                        <img id="previewImage" src="#" alt="Preview Image" style="display: none; max-width: 300px; max-height: 300px;" />
+                    </td>
+
+                    <td><input type="text" class="form-control" id="itemSerialNo10" name="itemSerialNo10" /></td>
+                    <td>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableYes10" name="returnable10" value="Yes">
+                            <label class="form-check-label">Yes</label>
+                        </div>
+                        <div class="form-check">
+                            <input type="radio" class="form-check-input" id="returnableNo10" name="returnable10" value="No">
+                            <label class="form-check-label">No</label>
+                        </div>
+                    </td>
+
+                    @*<td><input type="date" class="form-control" id="dueDate2" name="dueDate2" style="display: none;" /></td>*@
+
+                    <td>
+                        <select class="form-control" id="itemCategory10" name="itemCategory10">
+                            <option value="" disabled selected hidden>--- Select ---</option>
+                            @foreach (var category in ViewBag.ItemCategories)
+                            {
+                                <option value="@category">@category</option>
+                            }
+                        </select>
+                    </td>
+
+                    <td><textarea class="form-control" id="itemDescription10" name="itemDescription10" rows="3"></textarea></td>
+
+                    <td><button type="button" class="btn btn-danger" onclick="removeItemRow(this)">Remove</button></td>
+
+                    
+               
+            
+                `;
+                    itemTableBody10.appendChild(newRow);
+                }
+
+                
+
+         
+
+
+    function displayImage() {
+        const input = document.getElementById('itemPhotos');
+        const previewImage = document.getElementById('previewImage');
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            }
+
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            previewImage.style.display = 'none';
+        }
+    }
+
+    function displayImage(input) {
+        const previewImage = input.nextElementSibling; // Find the sibling img element
+
+        if (input.files && input.files[0]) {
+            const reader = new FileReader();
+
+            reader.onload = function (e) {
+                previewImage.src = e.target.result;
+                previewImage.style.display = 'block';
+            };
+
+            reader.readAsDataURL(input.files[0]);
+        } else {
+            previewImage.style.display = 'none';
+        }
+    }
+
+    // # Receiver Details #
+
+    // Show and Hide Receiver Details Form and Fields
+    // Select Receiver Available 'Yes' then Display Receiver Details Form
+    // Select Receiver Availabe 'No' then not Display Receiver Details Form
+    const receiverAvailableYesRadio = document.getElementById("receiverAvailableYes");
+    const receiverAvailableNoRadio = document.getElementById("receiverAvailableNo");
+    const receiverDetailsFields = document.getElementById("receiverDetailsFields");
+
+    function updateReceiverDetailsDisplay() {
+        if (receiverAvailableYesRadio.checked) {
+            receiverDetailsFields.style.display = "block";
+        } else {
+            receiverDetailsFields.style.display = "none";
+        }
+    }
+
+    updateReceiverDetailsDisplay();
+
+    receiverAvailableYesRadio.addEventListener("change", updateReceiverDetailsDisplay);
+    receiverAvailableNoRadio.addEventListener("change", updateReceiverDetailsDisplay);
+
+
+    // Function to Fetch Receiver Details and Populate Form Fields
+    // Input Receiver Service No after that other fields are auto filled
+    function fetchReceiverDetails() {
+        const serviceNo = document.getElementById("receiverServiceNo").value;
+
+        $.ajax({
+            type: "GET",
+            url: `/NewRequest/GetReceiverDetails?serviceNo=${serviceNo}`,
+            success: function (data) {
+                // Populate the Form Fields with Retrieved Data
+                document.getElementById("receiverGroup").value = data.group;
+                document.getElementById("receiverName").value = data.name;
+                document.getElementById("receiverContactNo").value = data.contactNo;
+            },
+            error: function () {
+
+            }
+        });
+    }
+
+    document.getElementById("receiverServiceNo").addEventListener("change", fetchReceiverDetails);
+
+
+    // Function to Clear Receiver Details Fields
+    function clearReceiverDetailsFields() {
+        document.getElementById("receiverServiceNo").value = "";
+        document.getElementById("receiverName").value = "";
+        document.getElementById("receiverGroup").value = "";
+        document.getElementById("receiverContactNo").value = "";
+    }
+
+    document.getElementById("clearReceiverDetails").addEventListener("click", clearReceiverDetailsFields);
+
+
+
+    function validateNICOnInput() {
+        var nicNo = document.getElementById('carrierNicNo').value;
+        var nicRegex = /^[0-9]{9,12}[vVxX]?$/; // Adjust the regex based on your NIC format
+
+        if (nicRegex.test(nicNo)) {
+            // NIC is valid
+            clearNICValidationMessage();
+            // Additional logic if needed
+        } else {
+            // NIC is invalid
+            displayNICValidationMessage("Invalid NIC Number Format");
+            // Additional logic if needed
+        }
+    }
+
+    function displayNICValidationMessage(message) {
+        // Display the NIC validation error message in the span element
+        document.getElementById('nicValidationMessage').innerText = message;
+    }
+
+    function clearNICValidationMessage() {
+        // Clear the NIC validation error message
+        document.getElementById('nicValidationMessage').innerText = '';
+    }
+
+
+
+
+    function validateMobileOnInput() {
+        var mobileNo = document.getElementById('carrierContactNo').value;
+        var mobileRegex = /^0\d{9}$/; // Adjust the regex based on your NIC format
+
+        if (mobileRegex.test(mobileNo)) {
+            // NIC is valid
+            clearmobileValidationMessage();
+            // Additional logic if needed
+        } else {
+            // NIC is invalid
+            displaymobileValidationMessage("Invalid Contact Number Format");
+            // Additional logic if needed
+        }
+    }
+
+    function displaymobileValidationMessage(message) {
+        // Display the NIC validation error message in the span element
+        document.getElementById('mobileValidationMessage').innerText = message;
+    }
+
+    function clearmobileValidationMessage() {
+        // Clear the NIC validation error message
+        document.getElementById('mobileValidationMessage').innerText = '';
+    }
+
+
+
+    function removeItemRow(button) {
+        const row = button.closest("tr");
+        row.remove();
+    }
+
+
+
+    // # Save Date in Database #
+
+    function saveData() {
+
+        var returnableValue1 = $("input[name='returnable1']:checked").val();
+        var returnableValue2 = $("input[name='returnable2']:checked").val();
+        var returnableValue3 = $("input[name='returnable3']:checked").val();
+        var returnableValue4 = $("input[name='returnable4']:checked").val();
+        var returnableValue5 = $("input[name='returnable5']:checked").val();
+        var returnableValue6 = $("input[name='returnable6']:checked").val();
+        var returnableValue7 = $("input[name='returnable7']:checked").val();
+        var returnableValue8 = $("input[name='returnable8']:checked").val();
+        var returnableValue9 = $("input[name='returnable9']:checked").val();
+        var returnableValue10 = $("input[name='returnable10']:checked").val();
+
+        var formData = new FormData();
+
+        // Add data fields to the FormData object
+        formData.append("ServiceNo", $("#senderServiceNo").val());
+        formData.append("CarrierName", $("#carrierName").val());
+        formData.append("NICNo", $("#carrierNicNo").val());
+        formData.append("Contactno", $("#carrierContactNo").val());
+
+        formData.append("ItemName1", $("#itemName1").val());
+        formData.append("ItemSerialNo1", $("#itemSerialNo1").val());
+        formData.append("ItemCategory1", $("#itemCategory1").val());
+        formData.append("ItemDescription1", $("#itemDescription1").val());
+        
+        formData.append("LocationName", $("#locationName").val());
+        formData.append("SLTInLocation", $("#sltInLocation").val());
+        formData.append("NonSLTInLocation", $("#nonSltInLocation").val());
+        formData.append("OutLocation", $("#outLocation").val());
+        formData.append("ExecutiveOfficer", $("#executiveOfficer").val());
+
+        formData.append("ReceiverServiceNo", $("#receiverServiceNo").val());
+
+
+        // Add the image file to the FormData object
+        var fileInput1 = document.getElementById("itemPhotos1");
+       
+        console.log("fileInput1:", fileInput1);
+
+        //formData.append("itemPhotos1", fileInput1.files[0]);
+        // formData.append("itemPhotos2", fileInput2.files[0]);
+        // Check if fileInput1 has a file
+        if (fileInput1 && fileInput1.files && fileInput1.files.length > 0) {
+            console.log("itemPhotos1:", fileInput1.files[0]);
+            formData.append("itemPhotos1", fileInput1.files[0]);
+        }
+
+        
+        
+
+        formData.append("returnable1", returnableValue1);
+        
+        
+        
+
+        // item 2
+        if ($("#itemName2").val() !== "") {
+            formData.append("ItemName2", $("#itemName2").val());
+            formData.append("ItemSerialNo2", $("#itemSerialNo2").val());
+            formData.append("ItemCategory2", $("#itemCategory2").val());
+            formData.append("ItemDescription2", $("#itemDescription2").val());
+
+            var fileInput2 = document.getElementById("itemPhotos2");
+            console.log("fileInput2:", fileInput2);
+
+            if (fileInput2 && fileInput2.files && fileInput2.files.length > 0) {
+                console.log("itemPhotos2:", fileInput2.files[0]);
+                formData.append("itemPhotos2", fileInput2.files[0]);
+            }
+
+            formData.append("returnable2", returnableValue2);
+        }
+
+
+        // item 3
+        if ($("#itemName3").val() !== "") {
+            formData.append("ItemName3", $("#itemName3").val());
+            formData.append("ItemSerialNo3", $("#itemSerialNo3").val());
+            formData.append("ItemCategory3", $("#itemCategory3").val());
+            formData.append("ItemDescription3", $("#itemDescription3").val());
+
+            var fileInput3 = document.getElementById("itemPhotos3");
+            console.log("fileInput3:", fileInput3);
+
+            if (fileInput3 && fileInput3.files && fileInput3.files.length > 0) {
+                console.log("itemPhotos3:", fileInput3.files[0]);
+                formData.append("itemPhotos3", fileInput3.files[0]);
+            }
+
+            formData.append("returnable3", returnableValue3);
+        }
+
+
+        // item 4
+        if ($("#itemName4").val() !== "") {
+            formData.append("ItemName4", $("#itemName4").val());
+            formData.append("ItemSerialNo4", $("#itemSerialNo4").val());
+            formData.append("ItemCategory4", $("#itemCategory4").val());
+            formData.append("ItemDescription4", $("#itemDescription4").val());
+
+            var fileInput4 = document.getElementById("itemPhotos4");
+            console.log("fileInput4:", fileInput4);
+
+            if (fileInput4 && fileInput4.files && fileInput4.files.length > 0) {
+                console.log("itemPhotos4:", fileInput4.files[0]);
+                formData.append("itemPhotos4", fileInput4.files[0]);
+            }
+
+            formData.append("returnable4", returnableValue4);
+        }
+
+
+        // item 5
+        if ($("#itemName5").val() !== "") {
+            formData.append("ItemName5", $("#itemName5").val());
+            formData.append("ItemSerialNo5", $("#itemSerialNo5").val());
+            formData.append("ItemCategory5", $("#itemCategory5").val());
+            formData.append("ItemDescription5", $("#itemDescription5").val());
+
+            var fileInput5 = document.getElementById("itemPhotos5");
+            console.log("fileInput5:", fileInput5);
+
+            if (fileInput5 && fileInput5.files && fileInput5.files.length > 0) {
+                console.log("itemPhotos5:", fileInput5.files[0]);
+                formData.append("itemPhotos5", fileInput5.files[0]);
+            }
+
+            formData.append("returnable5", returnableValue5);
+        }
+
+
+        // item 6
+        if ($("#itemName6").val() !== "") {
+            formData.append("ItemName6", $("#itemName6").val());
+            formData.append("ItemSerialNo6", $("#itemSerialNo6").val());
+            formData.append("ItemCategory6", $("#itemCategory6").val());
+            formData.append("ItemDescription6", $("#itemDescription6").val());
+
+            var fileInput6 = document.getElementById("itemPhotos6");
+            console.log("fileInput6:", fileInput6);
+
+            if (fileInput6 && fileInput6.files && fileInput6.files.length > 0) {
+                console.log("itemPhotos6:", fileInput6.files[0]);
+                formData.append("itemPhotos6", fileInput6.files[0]);
+            }
+
+            formData.append("returnable6", returnableValue6);
+        }
+
+
+        // item 7
+        if ($("#itemName7").val() !== "") {
+            formData.append("ItemName7", $("#itemName7").val());
+            formData.append("ItemSerialNo7", $("#itemSerialNo7").val());
+            formData.append("ItemCategory7", $("#itemCategory7").val());
+            formData.append("ItemDescription7", $("#itemDescription7").val());
+
+            var fileInput7 = document.getElementById("itemPhotos7");
+            console.log("fileInput7:", fileInput7);
+
+            if (fileInput7 && fileInput7.files && fileInput7.files.length > 0) {
+                console.log("itemPhotos7:", fileInput7.files[0]);
+                formData.append("itemPhotos7", fileInput7.files[0]);
+            }
+
+            formData.append("returnable7", returnableValue7);
+        }
+
+
+        // item 8
+        if ($("#itemName8").val() !== "") {
+            formData.append("ItemName8", $("#itemName8").val());
+            formData.append("ItemSerialNo8", $("#itemSerialNo8").val());
+            formData.append("ItemCategory8", $("#itemCategory8").val());
+            formData.append("ItemDescription8", $("#itemDescription8").val());
+
+            var fileInput8 = document.getElementById("itemPhotos8");
+            console.log("fileInput8:", fileInput8);
+
+            if (fileInput8 && fileInput8.files && fileInput8.files.length > 0) {
+                console.log("itemPhotos8:", fileInput8.files[0]);
+                formData.append("itemPhotos8", fileInput8.files[0]);
+            }
+
+            formData.append("returnable8", returnableValue8);
+        }
+
+
+
+        // item 9
+        if ($("#itemName9").val() !== "") {
+            formData.append("ItemName9", $("#itemName9").val());
+            formData.append("ItemSerialNo9", $("#itemSerialNo9").val());
+            formData.append("ItemCategory9", $("#itemCategory9").val());
+            formData.append("ItemDescription9", $("#itemDescription9").val());
+
+            var fileInput9 = document.getElementById("itemPhotos9");
+            console.log("fileInput9:", fileInput9);
+
+            if (fileInput9 && fileInput9.files && fileInput9.files.length > 0) {
+                console.log("itemPhotos9:", fileInput9.files[0]);
+                formData.append("itemPhotos9", fileInput9.files[0]);
+            }
+
+            formData.append("returnable9", returnableValue9);
+        }
+
+
+        // item 10
+        if ($("#itemName10").val() !== "") {
+            formData.append("ItemName10", $("#itemName10").val());
+            formData.append("ItemSerialNo10", $("#itemSerialNo10").val());
+            formData.append("ItemCategory10", $("#itemCategory10").val());
+            formData.append("ItemDescription10", $("#itemDescription10").val());
+
+            var fileInput10 = document.getElementById("itemPhotos10");
+            console.log("fileInput10:", fileInput10);
+
+            if (fileInput10 && fileInput10.files && fileInput10.files.length > 0) {
+                console.log("itemPhotos10:", fileInput10.files[0]);
+                formData.append("itemPhotos10", fileInput10.files[0]);
+            }
+
+            formData.append("returnable10", returnableValue10);
+        }
+
+
+
+        $.ajax({
+            url: '@Url.Action("CheckLogin", "NewRequest")',
+            type: "POST",
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (data) {
+                if (data.isdone) {
+                    alert("Record Added UnSuccessfully");
+                } else {
+                    alert("Record Added Successfully");
+                }
+
+                window.location.href = '@Url.Action("Index", "Home")';
+            },
+            error: function (xhr, textStatus, errorThrown) {
+                console.error(errorThrown);
+                alert("Error: Check the Details and Please Try Again.");
+            }
+        });
+
+    }
+
+
+   
+        
+
+</script>
+
+
+<style>
+    .box {
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 10px 0;
+    background-color: #f9f9f9;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+}
+
+.box h5 {
+    margin-top: 0;
+}
+
+tr {
+    border: 1px solid black; /* Set the border color to black for the specific table */
+}
+</style>

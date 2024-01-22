@@ -1,0 +1,158 @@
+﻿@model List<GatePass_Project.Models.MyRequestModel>
+
+@{
+    ViewData["Title"] = "My Request";
+}
+
+<div class="text-center">
+    <h1 class="display-4" style="font-size: 30px;">My Request</h1>
+</div>
+<br>
+
+<div class="form-group text-center">
+    <span>Show Entries </span>
+    <select id="pageSizeDropdown" class="form-control" style="width: 600px; display: inline-block; margin: 0 auto;">
+        <option value="" disabled selected hidden>Select the number of entries</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="50">50</option>
+    </select>
+
+    <!-- Add Reset button -->
+    <button id="resetButton" class="btn btn-blue">Reset</button>
+</div>
+<br>
+<br />
+
+
+<!-- My request table -->
+<div class="MyRequest-Container_row2">
+    <div class="Contain">
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Ref.No</th>
+                    <th scope="col">Emp Name</th>
+                    <th scope="col">Sender Serv.No</th>
+                    <th scope="col">In Location</th>
+                    <th scope="col">Out Location</th>
+                    <th scope="col">Receiver Serv.No</th>
+                    <th scope="col">Created Date Time</th>
+                    <th scope="col">EO Service No</th>
+                    <th scope="col">Carrier NIC</th>
+                    <th scope="col">Actions</th>
+                    <th scope="col">Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    <tr>
+                        <td>@request.Request_ref_no</td>
+                        <td>@request.Name</td>
+                        <td>@request.Sender_service_no</td>
+                        <td>@request.In_location_name</td>
+                        <td>@request.Out_location_name</td>
+                        <td>@request.Receiver_service_no</td>
+                        <td>@request.Created_date</td>
+                        <td>@request.ExO_service_no</td>
+                        <td>@request.Carrier_nic_no</td>
+                        <td>
+                            <div class="d-inline">
+                                <a href="@Url.Action("MyRequestItemDetail", "MyRequest", new { id = request.Request_ref_no })" class="btn btn-link">View Item Details</a>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div class="d-inline">
+                                <a href="@Url.Action("RequestStatus", "MyRequest", new { id = request.Request_ref_no })" class="btn btn-link">Status</a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Dropdown change event
+        $("#pageSizeDropdown").change(function () {
+            var selectedValue = $(this).val();
+            var rowsToDisplay = parseInt(selectedValue);
+
+            // Show/hide rows based on the selected value
+            $(".MyRequest-Container_row2 table tbody tr").hide();
+            $(".MyRequest-Container_row2 table tbody tr:lt(" + rowsToDisplay + ")").show();
+        });
+
+        // Reset button click event
+        $("#resetButton").click(function () {
+            // Show all rows
+            $(".MyRequest-Container_row2 table tbody tr").show();
+        });
+    });
+</script>
+
+
+
+
+<style>
+
+    .table {
+        font-size: 13px;
+        border-spacing: 0 15px;
+        width: 100%;
+    }
+
+        .table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .table td {
+            background-color: #ffffff;
+            border: 1px solid #333;
+            padding: 10px;
+        }
+    /* Custom style for buttons */
+    .btn {
+        border-radius: 5px;
+        padding: 5px 10px;
+        text-decoration: none;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+        /* Hover style for buttons */
+        .btn:hover {
+            text-decoration: underline;
+        }
+
+    /* Custom styles for button colors */
+    .btn-success {
+        background-color: #28a745; /* Green color for "Verify" button */
+        color: #fff; /* White text color */
+    }
+
+    .btn-danger {
+        background-color: #dc3545; /* Red color for "Reject" button */
+        color: #fff; /* White text color */
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+</style>

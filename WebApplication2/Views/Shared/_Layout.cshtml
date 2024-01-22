@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    @* <title>@ViewData["Title"] - GatePass_Project</title> *@
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GatePass.styles.css" asp-append-version="true" />
+
+
+    <!-- Google Material Icons -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+
+                <!-- Add the brand/logo (image) to the left corner -->
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQPrt5_aY5bOWT7YGXesVcYznOl8wIh6X1SyipfIHaeZA&s" alt="Logo" class="img-fluid" style="width: 140px; height: auto;">
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Admin</a>
+                                <ul class="dropdown-menu">
+                                    <li><a class="dropdown-item" asp-controller="SystemLocation" asp-action="SystemLocation">Existing Locations</a></li>
+                                    <li><a class="dropdown-item" asp-controller="ItemCategory" asp-action="ItemCategory">Existing Categories</a></li>
+                                    <li><a class="dropdown-item" asp-controller="NonSLTEmployee" asp-action="NonSLTEmployee">Non-SLT Employees</a></li>
+                                </ul>
+                            }
+                        </li>
+
+                       
+
+                        <!-- add "new request" bar -->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="NewRequest" asp-action="NewRequest"><b>New Request</b></a>
+                        </li>
+
+                        <!-- add "my request" bar -->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MyRequest" asp-action="MyRequest"><b>My Request</b></a>
+                        </li>
+
+                        <!-- add "exe approve" bar -->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ExeApprove" asp-action="ExeApprove"><b>Executive Approve</b></a>
+                        </li>
+
+                        <!-- add "verify" bar -->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Verify" asp-action="Verify"><b>DO Verify</b></a>
+                        </li>
+
+                        <!-- add "dispatch" bar -->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Dispatch" asp-action="Dispatch"><b>Dispatch</b></a>
+                        </li>
+
+                        <!-- add "my receipt" bar -->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Myreceipt" asp-action="Index"><b>My Receipt</b></a>
+                        </li>
+
+                        <!-- add "item tracker" bar -->
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ItemTracker" asp-action="ItemTracker"><b>Item Tracker</b></a>
+                        </li>
+
+                        <!-- add "admin" bar -->
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle text-dark" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false"><b>Admin</b></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" asp-controller="SystemLocation" asp-action="SystemLocation"><b>Existing Locations</b></a></li>
+                                <li><a class="dropdown-item" asp-controller="ItemCategory" asp-action="ItemCategory"><b>Existing Categories</b></a></li>
+                                <li><a class="dropdown-item" asp-controller="NonSLTEmployee" asp-action="NonSLTEmployee"><b>Non-SLT Employees</b></a></li>
+                            </ul>
+                        </li>
+
+                        <!-- Replace the existing notification bar code with the following -->
+                        <li class="nav-item" style="margin-left: auto;">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="ExeApprove" asp-action="Notification">
+                                <i id="notificationBellHeader" class="material-icons" style="color: blue;">notifications</i>
+                                <span id="notificationCountHeader">@ViewBag.CommentCount</span>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Login" asp-action="Login">
+                                <span class="material-icons">logout</span>
+                            </a>
+                        </li>
+
+
+
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+    
+    
+
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy;_2023_SLT_Gate_Pass_System
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+
+    <!-- Include the script for updating the bell icon dynamically -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        // Function to update the notification count
+        function updateNotificationCount(count) {
+            var notificationBell = $('#notificationBellHeader');
+            var notificationCount = $('#notificationCountHeader');
+
+            // Remove the notification-icon class if count is 0
+            if (count === 0) {
+                notificationBell.removeClass('notification-icon');
+            } else {
+                notificationBell.addClass('notification-icon');
+            }
+
+            // Update the notification count
+            notificationCount.text(count);
+        }
+
+        // Function to set the initial notification count on page load
+        $(document).ready(function () {
+            // Retrieve the notification count from local storage
+            var storedNotificationCount = localStorage.getItem('notificationCount');
+
+            // Set the initial notification count
+            var initialNotificationCount = storedNotificationCount ? parseInt(storedNotificationCount) : 0;
+            updateNotificationCount(initialNotificationCount);
+        });
+
+        // Function to handle the reject button click
+        $(document).on('click', '.reject-button', function () {
+            // Your existing logic for handling reject button click
+
+            // Increment the notification count and update the display
+            var currentCount = parseInt(localStorage.getItem('notificationCount')) || 0;
+            var newCount = currentCount + 1;
+            localStorage.setItem('notificationCount', newCount);
+
+            // Update the notification count in the layout
+            updateNotificationCount(newCount);
+        });
+    </script>
+</body>
+</html>

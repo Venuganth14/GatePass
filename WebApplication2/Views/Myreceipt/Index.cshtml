@@ -1,0 +1,133 @@
+﻿@model List<My_receipt_gate_pass.Models.MyreceiptModel>
+
+@{
+    ViewData["Title"] = "My Receipt";
+}
+<div>
+    <div class="text-center">
+        <h1 class="display-4" style="font-size: 30px;">My Receipt</h1>
+    </div>
+
+    <br>
+
+    <!-- Item tracker table -->
+    <div class="Myreceipt-Container_row2">
+        <div class="Contain">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Ref No</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Created Date Time</th>
+                        <th scope="col">In Location</th>
+                        <th scope="col">Out Location</th>
+                        <th scope="col">EO Service No</th>
+                        <th scope="col">Carrier_nic_no</th>
+                        <th scope="col">Full Details</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var request in Model)
+                    {
+                        <tr>
+                            <td>@request.Request_ref_no</td>
+                            <td>@request.Name</td>
+                            <td>@request.Created_date</td>
+                                    <td>@request.In_location_name</td>
+                                        <td>@request.Out_location_name</td>
+                                                    <td>@request.ExO_service_no</td>
+                                                        <td>@request.Carrier_nic_no</td>
+
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <a href="@Url.Action("myreceiptdetails", "Myreceipt", new { id = request.Request_ref_no })" class="btn btn-link">View</a>
+                                    <span class="mx-2">|</span>
+                                    <form method="post" asp-action="Receive">
+                                        <input type="hidden" name="requestRefNo" value="@request.Request_ref_no" />
+                                        <button type="submit" class="btn btn-success">Receive</button>
+                                    </form>
+                                    @* <span class="mx-2">|</span>*@
+                                    <form method="post" asp-action="Reject" class="reject-form">
+                                        <input type="hidden" name="requestRefNo" value="@request.Request_ref_no" />
+                                        <div class="d-flex align-items-center">
+                                            <button type="button" class="btn btn-danger toggle-reject-comment">Reject</button>
+                                            <button type="submit" class="btn btn-danger submit-reject-comment" style="display: none;">Reject</button>
+                                            <div class="ml-2">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control reject-comment" id="rejectComment" name="rejectComment" rows="4" style="display: none;"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // Toggle reject comment visibility
+        $(".toggle-reject-comment").click(function () {
+            var form = $(this).closest(".reject-form");
+            form.find(".reject-comment").toggle();
+            form.find(".toggle-reject-comment").toggle();
+            form.find(".submit-reject-comment").toggle();
+        });
+    });
+</script>
+
+<style>
+
+    .table {
+        font-size: 13px;
+        border-spacing: 0 15px;
+        width: 100%;
+    }
+
+        .table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .table td {
+            background-color: #ffffff;
+            border: 1px solid #333;
+            padding: 10px;
+        }
+    /* Custom style for buttons */
+    .btn {
+        border-radius: 5px;
+        padding: 5px 10px;
+        text-decoration: none;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+        /* Hover style for buttons */
+        .btn:hover {
+            text-decoration: underline;
+        }
+
+    /* Custom styles for button colors */
+    .btn-success {
+        background-color: #28a745; /* Green color for "Verify" button */
+        color: #fff; /* White text color */
+    }
+
+    .btn-danger {
+        background-color: #dc3545; /* Red color for "Reject" button */
+        color: #fff; /* White text color */
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+</style>

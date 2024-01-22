@@ -1,0 +1,120 @@
+﻿@{
+    ViewData["Title"] = "Notification Page";
+}
+
+<div class="container text-center">
+    <h1 class="display-4" style="font-size: 30px;">Rejected Request Details</h1>
+
+    <br />
+
+    <div class="notification-box" style="max-width: 750px; margin: 0 auto;">
+        @if (ViewData["WorkProgressData"] != null)
+        {
+            <div class="comment-count-box" id="commentCountBox">
+                <p>Rejected Requests count: <span id="notificationCount">@ViewData["CommentCount"]</span></p>
+            </div>
+
+            @foreach (var item in ViewData["WorkProgressData"] as List<Workprogress>)
+            {
+                <div class="gray-box" id="grayBox_@item.Request_ref_no">
+                    <div class="card mb-3">
+                        <div class="card-body text-center">
+                            <!-- Add text-center class here -->
+                            <h5 class="card-title">Request Reference No: @item.Request_ref_no</h5>
+                            <p class="card-text">Progress Status: @item.Progress_status</p>
+                            <p class="card-text">Update Date: @item.Update_date</p>
+                            <p class="card-text">Reason for Rejection: @(item.Any_comment != null ? item.Any_comment : "No comment")</p>
+
+                            <!-- Change the "Clear Notification" button style -->
+                            <button type="button" class="btn btn-danger m-2" onclick="handleClearNotificationButtonClick('@item.Request_ref_no', this)" style="font-size: 15px; padding: 4px 8px; width: 160px;">Clear Notification</button>
+
+                            <br><br />
+
+                            <a asp-action="PendingDetails" asp-route-id="@item.Request_ref_no">View Item Details</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p>No work progress data available.</p>
+        }
+    </div>
+
+    <!-- Include the script for updating the bell icon dynamically -->
+    <div class="comment-count-box" id="commentCountBox">
+        <p>Rejected Requests count: <span id="notificationCount">@ViewData["CommentCount"]</span></p>
+    </div>
+
+    <!-- Include the script for updating the bell icon dynamically -->
+    <script>
+        // Function to get notification count from local storage
+        function getNotificationCount() {
+            return localStorage.getItem('notificationCount');
+        }
+
+        // Function to set notification count to local storage
+        function setNotificationCount(CommentCount) {
+            localStorage.setItem('notificationCount', CommentCount);
+            $('#notificationCount').text(CommentCount);
+        }
+
+        // JavaScript function to handle the "Clear Notification" button click
+        function handleClearNotificationButtonClick(requestRefNo, buttonElement) {
+            $.ajax({
+                type: 'POST',
+                url: '/ExeApprove/MarkNotificationAsViewed',
+                data: { requestRefNo: requestRefNo },
+                success: function (response) {
+                    if (response.success) {
+                        // Hide the corresponding gray box when the "Clear Notification" button is clicked
+                        var grayBoxId = 'grayBox_' + requestRefNo;
+                        var grayBox = $('#' + grayBoxId);
+                        grayBox.hide();
+
+                        // Update the comment count on a successful response
+                        var currentNotificationCount = getNotificationCount();
+
+                        // Decrement the count and save it to local storage
+                        setNotificationCount(currentNotificationCount - 1);
+
+                        // Log success
+                        console.log('Notification marked as viewed for Request Reference No:', requestRefNo);
+
+                        // Update the notification count on the layout
+                        updateNotificationCount(currentNotificationCount - 1);
+
+                        // Reload the page after clearing the notification
+                        location.reload(true);
+                    } else {
+                        // Log the error
+                        console.error('Error marking notification as viewed:', response.error);
+                    }
+                },
+                error: function (error) {
+                    // Log the error
+                    console.error('Error marking notification as viewed:', error);
+                },
+                complete: function () {
+                    // Re-enable the button after the request is complete
+                    buttonElement.disabled = false;
+                }
+            });
+        }
+
+        // Function to update notification count on the layout
+        function updateNotificationCount(newCount) {
+            // Your logic here to visually update the notification count on the layout
+
+            // Assuming you want to update the count in the commentCountBox
+            $('#notificationCount').text(newCount);
+        }
+
+        // Initial setup: Set notification count from the server to local storage and the layout
+        var initialNotificationCount = @ViewData["CommentCount"]; // Replace with your actual logic to get the count
+        setNotificationCount(initialNotificationCount);
+        updateNotificationCount(initialNotificationCount);
+    </script>
+
+</div>

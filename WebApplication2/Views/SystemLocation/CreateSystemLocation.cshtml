@@ -1,0 +1,45 @@
+﻿@model GatePass_Project.Models.LocationsModel
+
+@{
+    ViewData["Title"] = "Create New Location";
+}
+
+<div class="container">
+    <h1>@ViewData["Title"]</h1>
+
+    <!-- Add Multiple Locations Section -->
+    <div class="location-form" style="margin-bottom: 20px">
+        <form method="post" asp-action="UploadLocationCsv" enctype="multipart/form-data" asp-controller="SystemLocation" class="mx-auto d-block" style="width: 50%;">
+            <div class="row mb-3">
+                <label for="file-upload" class="col-sm-3 col-form-label" style="white-space: nowrap">Choose File</label>
+                <div class="col-sm-9">
+                    <input type="file"
+                           name="csvFile"
+                           accept=".csv"
+                           class="form-control"
+                           id="file-upload"
+                           placeholder="Upload Csv Here" />
+                </div>
+            </div>
+            <button type="submit" class='btn btn-primary'>Submit CSV</button>
+        </form>
+    </div>
+
+    <!-- Add Location Section -->
+    <div class="location-form">
+        <form method="post" asp-action="NewSystemLocation" enctype="application/json" asp-controller="SystemLocation" class="mx-auto d-block" style="width: 50%;">
+            <div class="row mb-3">
+                <label for="inputlocationName" class="col-sm-3 col-form-label" style="white-space: nowrap;">Location Name</label>
+                <div class="col-sm-9">
+                    <input type="text"
+                       name="Loc_name"
+                       class="form-control"
+                       placeholder="Enter Location Here" />
+                </div>
+            </div>
+            <button type="submit" class='btn btn-primary'>Submit</button>
+        </form>
+    </div>
+
+    <a asp-action="SystemLocation">Back to List</a>
+</div>

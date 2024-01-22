@@ -1,0 +1,117 @@
+﻿@model GatePass_Project.Models.Login
+
+@{
+    Layout = null;
+}
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<head>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/GatePass.styles.css" asp-append-version="true" />
+</head>
+
+<style>
+    body {
+        background-image: url('https://blog.apnic.net/wp-content/uploads/2022/06/SLTMobitel_banner.png');
+        background-repeat: no-repeat;
+        background-size: cover;
+        background-position: center;
+        height: 100vh;
+        margin: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .loginn {
+        margin-left: 600px;
+        margin-top: 250px;
+    }
+</style>
+
+<body>
+    <div class="d-flex align-items-center py-4 bg-body-tertiary">
+        <div class="loginn">
+            <h1 class="gatepass-heading"> SLT Mobitel GatePass </h1>
+
+            @if (TempData["Message"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Message"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <form class="align-items-center" post" asp-action="NewLogin" asp-controller="Login">
+                <div class="mb-3">
+                    <label for="inputName" class="form-label">Username</label>
+                    <input type="text"
+                           name="username"
+                           class="form-control"
+                           placeholder="Enter Username Here" />
+                </div>
+
+                <div class="mb-3">
+                    <label for="inputpass" class="form-label">Password</label>
+                    <input type="password"
+                           name="password"
+                           class="form-control"
+                           placeholder="Enter Password Here" />
+                </div>
+                <button type="submit" class='btn btn-primary'>Submit</button>
+
+            </form>
+
+            <button type="button" class="btn btn-primary" onclick="location.href='@Url.Action("SLTLogin","SLTLogin")'"> SLT IAM</button>
+        </div>
+    </div>
+</body>
+
+<style>
+    .gatepass-heading {
+        color: #007bff; /* Set the font color to blue */
+    }
+</style>
+
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+
+
+@* 
+<script>
+    $(document).ready(function () {
+        // Intercept form submission
+        $("#sltLoginForm").submit(function (event) {
+            // Prevent the default form submission
+            event.preventDefault();
+
+            // Make an Ajax request to SLTLogin action
+            $.ajax({
+                type: "POST",
+                url: $("#sltLoginForm").attr("action"),
+                success: function (data) {
+                    // Handle the success response as needed
+                    console.log(data);
+                },
+                error: function (error) {
+                    // Handle errors if any
+                    console.error(error);
+                }
+            });
+        });
+    });
+</script>
+ *@

@@ -1,0 +1,137 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = GatePass
+build_property.RootNamespace = GatePass
+build_property.ProjectDir = D:\New folder (2)\GatePass_Project\GatePass_Project\WebApplication2\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\New folder (2)\GatePass_Project\GatePass_Project\WebApplication2
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Dispatch/Dispatch.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlzcGF0Y2hcRGlzcGF0Y2guY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Dispatch/ViewDispatchDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGlzcGF0Y2hcVmlld0Rpc3BhdGNoRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/ExeApprove/ExeApprove.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhlQXBwcm92ZVxFeGVBcHByb3ZlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/ExeApprove/Notification.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhlQXBwcm92ZVxOb3RpZmljYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/ExeApprove/PendingDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRXhlQXBwcm92ZVxQZW5kaW5nRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Home/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Home/UserSuccessPage.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxVc2VyU3VjY2Vzc1BhZ2UuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/ItemCategory/CreateNewCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbUNhdGVnb3J5XENyZWF0ZU5ld0NhdGVnb3J5LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/ItemCategory/ItemCategory.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbUNhdGVnb3J5XEl0ZW1DYXRlZ29yeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/ItemTracker/ItemTracker.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVRyYWNrZXJcSXRlbVRyYWNrZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/ItemTracker/PendingReturnableDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSXRlbVRyYWNrZXJcUGVuZGluZ1JldHVybmFibGVEZXRhaWxzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Login/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTG9naW5cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Myreceipt/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXlyZWNlaXB0XEluZGV4LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Myreceipt/myreceiptdetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXlyZWNlaXB0XG15cmVjZWlwdGRldGFpbHMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/MyRequest/MyRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXlSZXF1ZXN0XE15UmVxdWVzdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/MyRequest/MyRequestItemDetail.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXlSZXF1ZXN0XE15UmVxdWVzdEl0ZW1EZXRhaWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/MyRequest/RequestStatus.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTXlSZXF1ZXN0XFJlcXVlc3RTdGF0dXMuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/NewRequest/NewRequest.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTmV3UmVxdWVzdFxOZXdSZXF1ZXN0LmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/NonSLTEmployee/CreateNewNonSLTEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm9uU0xURW1wbG95ZWVcQ3JlYXRlTmV3Tm9uU0xURW1wbG95ZWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/NonSLTEmployee/NonSLTEmployee.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTm9uU0xURW1wbG95ZWVcTm9uU0xURW1wbG95ZWUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Shared/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/SLTLogin/SLTLogin.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU0xUTG9naW5cU0xUTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/SystemLocation/CreateSystemLocation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3lzdGVtTG9jYXRpb25cQ3JlYXRlU3lzdGVtTG9jYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/SystemLocation/SystemLocation.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU3lzdGVtTG9jYXRpb25cU3lzdGVtTG9jYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Verify/Verify.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVyaWZ5XFZlcmlmeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Verify/ViewPendingDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcVmVyaWZ5XFZpZXdQZW5kaW5nRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/New folder (2)/GatePass_Project/GatePass_Project/WebApplication2/Views/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-rqcu1ehqez

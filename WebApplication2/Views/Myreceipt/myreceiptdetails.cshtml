@@ -1,0 +1,76 @@
+﻿@model List<My_receipt_gate_pass.Models.myreceiptdetailsModel>
+
+@{
+    ViewData["Title"] = "My Receipt Details";
+}
+
+<div class="container">
+    <h1 class="custom-font" style="font-size: 28px;">Receiver Items Details</h1>
+</div>
+
+<br />
+
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title custom-font">Ref. No: @Model[0].Request_ref_no</h5>
+
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <div class="card-body">
+                    <p class="card-text custom-font">Item id: @item.Item_id</p>
+                    <p class="card-text custom-font">Item Serial No: @item.Item_serial_no</p>
+                    <p class="card-text custom-font">Item Name: @item.Item_name</p>
+                    <p class="card-text custom-font">Item Description: @item.Item_description</p>
+                    <p class="card-text custom-font">Item Returnable status: @(item.Returnable_status)</p>
+                    @* <p class="card-text custom-font">Item Photos: @item.Attaches</p> *@
+
+                    <div class="container">
+                        <div>
+                            <br>
+                            <h4>Item Photos</h4>
+                            <br>
+                           <button type="button" class="btn btn-primary" onclick="toggleItemPhotosForm(@item.Item_id)" >View Item Images</button>
+                        </div>
+                    </div>
+
+                    <div>
+                        <br>
+                    </div>
+
+                    <div class="container">
+                        <form id="itemPhotosForm-@item.Item_id" style="display:none">
+                           
+                            <div class="form-group">
+                                @if (item.Attaches != null && item.Attaches.Length > 0)
+                                {
+                                    <p>Image Data Found</p>
+                                    var base64String = Convert.ToBase64String(item.Attaches);
+                                    <img src="data:image;base64,@base64String" style="max-width: 35%;" />
+                                }
+                                else
+                                {
+                                    <p>No image available</p>
+                                }
+                            </div>
+                        </form>
+
+                        <a asp-action="Index">Back to List</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+
+<script>
+    function toggleItemPhotosForm(itemId) {
+        const itemPhotosForm = document.getElementById(`itemPhotosForm-${itemId}`);
+        if (itemPhotosForm.style.display === "none" || itemPhotosForm.style.display === "") {
+            itemPhotosForm.style.display = "block";
+        } else {
+            itemPhotosForm.style.display = "none";
+        }
+    }
+</script>
+

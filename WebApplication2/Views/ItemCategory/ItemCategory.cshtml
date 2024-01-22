@@ -1,0 +1,239 @@
+﻿@model GatePass_Project.Models.ItemCategoryModel
+
+@{
+    ViewData["Title"] = "Item Categories";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<style>
+
+    
+    .table {
+        font-size: 14px;
+        border-spacing: 0 15px;
+        width: 100%;
+    }
+
+        .table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .table td {
+            background-color: #ffffff;
+            border: 1px solid #333;
+            padding: 10px;
+        }
+
+    .btn {
+        background-color: transparent;
+        color: #007bff; /* Change to the desired text color */
+        border: none;
+        border-radius: 5px;
+        padding: 5px 10px;
+        text-decoration: none;
+        margin-right: 5px; /* Add margin to separate buttons */
+        cursor: pointer;
+    }
+
+        /* Hover style for buttons */
+        .btn:hover {
+            text-decoration: underline;
+
+        }
+
+</style>
+
+
+<div class='MyRequest-Container'>
+
+    <div class="MyRequest-Container_row2">
+        <!-- Link to create a new location -->
+
+        <a asp-controller="ItemCategory" asp-action="CreateNewCategory">Create New Item Category</a>
+
+            <!-- Tabs for Viewing Data -->
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" id="withoutRemoved-tab" data-toggle="tab" href="#withoutRemoved" role="tab" aria-controls="withoutRemoved" aria-selected="true" onclick="displayWithoutRemovedData()">Items In Use</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" id="withRemoved-tab" data-toggle="tab" href="#withRemoved" role="tab" aria-controls="withRemoved" aria-selected="false" onclick="displayWithRemovedData()">Items No Longer In Use</a>
+                </li>
+            </ul>
+
+            <!-- Tab Content -->
+            <div class="tab-content" id="myTabContent">
+                <!-- Tab 1: Without Removed -->
+
+            <br />
+            <div class="container">
+                <form role="search" class="mx-auto d-block" style="width: 50%;">
+                    <div class="row mb-3">
+                        <label for="searchcategory" class="col-sm-4 col-form-label" style="white-space: nowrap;">Search Categories</label>
+                        <div class="col-sm-8">
+                            <input class="form-control" id="myInput" type="search" placeholder="Search" aria-label="Search">
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <label for="entries" class="col-sm-4 col-form-label" style="white-space: nowrap;">Entries Per Page</label>
+                        <div class="col-sm-8">
+                            <select id="entriesPerPage" class="form-select">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                    </div>
+                </form>
+                <br>
+            </div>
+                <div class="tab-pane fade show active" id="withoutRemoved" role="tabpanel" aria-labelledby="withoutRemoved-tab">
+                    <h2>Item Categories</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Category ID</th>
+                                <th>Category Name</th>
+                                <th>Category Type</th>
+                                <th>Created Date</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var category in ViewBag.ItemCategoriesWithoutRemoved)
+                            {
+                                <tr>
+                                    <td>@category.Category_id</td>
+                                    <td>@category.Category_name</td>
+                                    <td>@category.Category_type</td>
+                                    <td>@category.Created_date</td>
+                                    <td>
+                                        <form method="post" asp-action="DeleteItemCategory" asp-controller="ItemCategory">
+                                            <input type="hidden" name="categoryId" value="@category.Category_id" />
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Tab 2: With Removed -->
+                <div class="tab-pane fade" id="withRemoved" role="tabpanel" aria-labelledby="withRemoved-tab">
+                    <h2>Removed Item Categories</h2>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Category ID</th>
+                                <th>Category Name</th>
+                                <th>Category Type</th>
+                                <th>Created Date</th>
+                                <th>Removed Date</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var category in ViewBag.ItemCategoriesWithRemoved)
+                            {
+                                <tr>
+                                    <td>@category.Category_id</td>
+                                    <td>@category.Category_name</td>
+                                    <td>@category.Category_type</td>
+                                    <td>@category.Created_date</td>
+                                    <td>@category.Removed_date</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </Container>
+    </div>
+</div>
+
+
+<!-- Bootstrap CSS and JS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+<!-- Bootstrap Modal -->
+<div class="modal fade" id="messageModal" tabindex="-1" role="dialog" aria-labelledby="messageModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="messageModalLabel">Message</h5>
+                <button type="button" class="close" data-dismiss="modal" onclick="closeModal()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p id="messageText"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" onclick="closeModal()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- trigger the modal to display temp messages -->
+@if (!string.IsNullOrEmpty(TempData["ItemMessage"] as string))
+{
+    <script>
+        $(document).ready(function () {
+            var message = '@TempData["ItemMessage"]';
+            $("#messageText").text(message);
+            $("#messageModal").modal('show');
+        });
+    </script>
+}
+<script>
+    function closeModal() {
+        $("#messageModal").modal('hide');
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("table tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function () {
+        $("#myInput").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("table tbody tr").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        // Handle change in the number of entries per page
+        $("#entriesPerPage").change(function () {
+            var entriesPerPage = parseInt($(this).val());
+            // Show/hide rows based on the selected number of entries
+            $("table tbody tr").hide();
+            $("table tbody tr:lt(" + entriesPerPage + ")").show();
+        });
+
+        // Trigger the change event to apply the default number of entries
+        $("#entriesPerPage").trigger("change");
+    });
+</script>
+
+
+
+    

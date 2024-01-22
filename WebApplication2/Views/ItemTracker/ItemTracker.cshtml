@@ -1,0 +1,115 @@
+﻿@model List<GatePass_Project.Models.ItemTrackerModel>
+
+@{
+    ViewData["Title"] = "Item Tracker";
+}
+
+<div class="text-center">
+    <h1 class="display-4" style="font-size: 30px;">Item Tracker</h1>
+</div>
+<br />
+
+<!-- Item tracker table -->
+<div class="ItemTracker-Container_row2">
+    <div class="Contain">
+        <table class="table table-bordered text-center">
+            <thead>
+                <tr>
+                    <th scope="col">Ref. No</th>
+                    <th scope="col">Employee Name</th>
+                    <th scope="col">Mobile No</th>
+                    <th scope="col">In Location</th>
+                    <th scope="col">Out Location</th>
+                    <th scope="col">Receiver Service No</th>
+                    <th scope="col">Created Date Time</th>
+                    <th scope="col">Action</th>
+                    <th scope="col">Returned</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                    <tr style="background-color: @(IsRowExpired(request.Created_date) ? "#FFFF00" : "#fff"); color: #000;">
+                        <td>@request.Request_ref_no</td>
+                        <td>@request.Name</td>
+                        <td>@request.MobileNo</td>
+                        <td>@request.In_location_name</td>
+                        <td>@request.Out_location_name</td>
+                        <td>@request.Receiver_service_no</td>
+                        <td>@request.Created_date</td>
+                        <td>
+                            <div class="d-inline">
+                                <a href="@Url.Action("PendingReturnableDetails", "ItemTracker", new { id = request.Request_ref_no })" class="btn btn-link">View</a>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="d-inline">
+                                <!-- Add a form for marking as Returned -->
+                                <form method="post" asp-action="MarkAsReturned">
+                                    <input type="hidden" name="requestRefNo" value="@request.Request_ref_no" />
+                                    <button type="submit" class="btn btn-success">Returned</button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@functions {
+    public bool IsRowExpired(DateTime createdDate)
+    {
+        // Check if the difference between the current date and the created date is more than 3 days
+        return DateTime.Now > createdDate.AddDays(3);
+    }
+}
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            // Optionally, you can set up a timer to update row colors periodically
+            // setInterval(updateRowColors, 60000); // Update every minute
+        });
+
+        function updateRowColors() {
+            $(".table tbody tr").each(function () {
+                var createdDate = new Date($(this).find("td:nth-child(6)").text()); // Adjust the column index based on your actual data
+                if (isRowExpired(createdDate)) {
+                    $(this).css({ "background-color": "#FFFF00", "color": "#000" });
+                }
+            });
+        }
+
+        function isRowExpired(createdDate) {
+            var currentDate = new Date();
+            var threeDaysAgo = new Date(createdDate);
+            threeDaysAgo.setDate(threeDaysAgo.getDate() + 3);
+            return currentDate > threeDaysAgo;
+        }
+    </script>
+}
+
+    <style>
+
+        .table {
+            font-size: 13px;
+            border-spacing: 0 15px;
+            width: 100%;
+        }
+
+            .table th {
+                background-color: #f5f5f5;
+                font-weight: bold;
+            }
+
+            .table td {
+                border: 1px solid #333;
+                padding: 10px;
+            }
+
+    </style>

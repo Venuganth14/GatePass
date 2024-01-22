@@ -1,0 +1,311 @@
+﻿@model List<GatePass_Project.Models.VerifyModel>
+
+@{
+    ViewData["Title"] = "Verify Page";
+}
+
+<div class="text-center page-title">
+    <h1 class="display-4" style="font-size: 30px;">Verify</h1>
+</div>
+
+<br>
+
+
+<!-- Add the search input field at the top -->
+<div class="d-flex justify-content-center">
+    <div class="input-group mb-3" style="max-width: 600px;">
+        <input type="text" id="employeeNameSearch" class="form-control" placeholder="Search by Employee Name" style="margin-right: 5px;">
+        <div class="input-group-append" style="margin-left: 5px;">
+            <button class="btn btn-primary" id="searchButton" type="button">Search</button>
+            <button class="btn btn-secondary" id="resetButton" type="button">Reset</button>
+        </div>
+    </div>
+</div>
+
+<div class="form-group text-center">
+    <span>Show Entries </span>
+    <select id="pageSizeDropdown" class="form-control" style="width: 600px; display: inline-block; margin: 0 auto;">
+        <option value="" disabled selected hidden>Select the number of entries</option>
+        <option value="2">2</option>
+        <option value="5">5</option>
+        <option value="10">10</option>
+        <option value="50">50</option>
+    </select>
+</div>
+
+<br><br/>
+
+
+<ul class="nav nav-tabs" id="myTabs" role="tablist">
+    <li class="nav-item pending" role="presentation">
+        <a class="nav-link" href="@Url.Action("Pending", "Verify")">Pending</a>
+    </li>
+    <li class="nav-item verified" role="presentation">
+        <a class="nav-link" href="@Url.Action("Verified", "Verify")">Verified</a>
+    </li>
+    <li class="nav-item rejected" role="presentation">
+        <a class="nav-link" href="@Url.Action("Rejected", "Verify")">Rejected</a>
+    </li>
+</ul>
+
+<div class="tab-content" id="myTabsContent">
+    <!-- Pending Tab Content -->
+    <div class="tab-pane fade show active" id="pending" role="tabpanel" aria-labelledby="pending-tab">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ref. No</th>
+                    <th>Name</th>
+                    <th>Sender Service No</th>
+                    <th>In Location</th>
+                    <th>Out Location</th>
+                    <th>Receiver Service No</th>
+                    <th>Created Date</th>
+                    <th>EO Service No</th>
+                    <th>Carrier NIC</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var request in Model)
+                {
+                        <tr>
+                            <td>@request.Request_ref_no</td>
+                            <td>@request.Name</td>
+                            <td>@request.Sender_service_no</td>
+                            <td>@request.In_location_name</td>
+                            <td>@request.Out_location_name</td>
+                            <td>@request.Receiver_service_no</td>
+                            <td>@request.Created_date.ToShortDateString()</td>
+                            <td>@request.ExO_service_no</td>
+                            <td>@request.Carrier_nic_no</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <a href="@Url.Action("ViewPendingDetails", "Verify", new { id = request.Request_ref_no })" class="btn btn-link">View</a>
+                                    <span class="mx-2">|</span>
+                                    <form method="post" asp-action="Approve">
+                                        <input type="hidden" name="requestRefNo" value="@request.Request_ref_no" />
+                                        <button type="submit" class="btn btn-success">Verify</button>
+                                    </form>
+                                @* <span class="mx-2">|</span>*@
+                                    <form method="post" asp-action="Reject" class="reject-form">
+                                        <input type="hidden" name="requestRefNo" value="@request.Request_ref_no" />
+                                        <div class="d-flex align-items-center">
+                                            <button type="button" class="btn btn-danger toggle-reject-comment">Reject</button>
+                                            <button type="submit" class="btn btn-danger submit-reject-comment" style="display: none;">Reject</button>
+                                            <div class="ml-2">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <textarea class="form-control reject-comment" id="rejectComment" name="rejectComment" rows="4" style="display: none;"></textarea>
+                                        </div>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Approved Tab Content -->
+    <div class="tab-pane fade" id="verified" role="tabpanel" aria-labelledby="verified-tab">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ref. No</th>
+                    <th>Name</th>
+                    <th>Sender Service No</th>
+                    <th>In Location</th>
+                    <th>Out Location</th>
+                    <th>Receiver Service No</th>
+                    <th>Created Date</th>
+                    <th>EO Service No</th>
+                    <th>Carrier NIC</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through and display approved requests here -->
+                @foreach (var request in Model)
+                {
+                        <tr>
+                            <td>@request.Request_ref_no</td>
+                            <td>@request.Name</td>
+                            <td>@request.Sender_service_no</td>
+                            <td>@request.In_location_name</td>
+                            <td>@request.Out_location_name</td>
+                            <td>@request.Receiver_service_no</td>
+                            <td>@request.Created_date.ToShortDateString()</td>
+                            <td>@request.ExO_service_no</td>
+                            <td>@request.Carrier_nic_no</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                <a href="@Url.Action("ViewPendingDetails", "Verify", new { id = request.Request_ref_no })" class="btn btn-link">View</a>
+                                </div>
+                            </td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Rejected Tab Content -->
+    <div class="tab-pane fade" id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Ref. No</th>
+                    <th>Name</th>
+                    <th>Sender Service No</th>
+                    <th>In Location</th>
+                    <th>Out Location</th>
+                    <th>Receiver Service No</th>
+                    <th>Created Date</th>
+                    <th>EO Service No</th>
+                    <th>Carrier NIC</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Loop through and display rejected requests here -->
+                @foreach (var request in Model)
+                {
+                        <tr>
+                            <td>@request.Request_ref_no</td>
+                            <td>@request.Name</td>
+                            <td>@request.Sender_service_no</td>
+                            <td>@request.In_location_name</td>
+                            <td>@request.Out_location_name</td>
+                            <td>@request.Receiver_service_no</td>
+                            <td>@request.Created_date.ToShortDateString()</td>
+                            <td>@request.ExO_service_no</td>
+                            <td>@request.Carrier_nic_no</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                        <a href="@Url.Action("ViewPendingDetails", "Verify", new { id = request.Request_ref_no })" class="btn btn-link">View</a>
+                                </div>
+                            </td>
+                        </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Include jQuery -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Get the current URL path and split it
+        var path = window.location.pathname.split("/").pop();
+
+        // Check if the current path is "Pending", "Verified", or "Rejected"
+        if (path === "Pending" || path === "Verified" || path === "Rejected") {
+            // Find the corresponding tab link and add the "active" class
+            $("#myTabs a[href='#" + path.toLowerCase() + "']").addClass("active");
+
+            // Show the corresponding tab content
+            $("#myTabsContent div.tab-pane").removeClass("show active");
+            $("#" + path.toLowerCase()).addClass("show active");
+        }
+
+        // Toggle reject comment visibility
+        $(".toggle-reject-comment").click(function () {
+            var form = $(this).closest(".reject-form");
+            form.find(".reject-comment").toggle();
+            form.find(".toggle-reject-comment").toggle();
+            form.find(".submit-reject-comment").toggle();
+        });
+
+        // Search button click event
+        $("#searchButton").click(function () {
+            var searchValue = $("#employeeNameSearch").val().trim().toLowerCase();
+            filterRowsByEmployeeName(searchValue);
+        });
+
+        // Reset button click event
+        $("#resetButton").click(function () {
+            // Clear the search input field
+            $("#employeeNameSearch").val("");
+            // Show all rows
+            $("table tbody tr").show();
+        });
+
+        // Handle dropdown change event
+        $("#pageSizeDropdown").change(function () {
+            var selectedValue = $(this).val();
+            var rowsToDisplay = parseInt(selectedValue);
+
+            // Hide all rows
+            $("tbody tr").hide();
+
+            // Show the selected number of rows
+            $("tbody tr:lt(" + rowsToDisplay + ")").show();
+        });
+
+        // Function to filter and display rows based on Employee Name search
+        function filterRowsByEmployeeName(employeeNameSearchValue) {
+            $("table tbody tr").each(function () {
+                var employeeName = $(this).find("td:nth-child(2)").text().toLowerCase();
+                if (employeeName.includes(employeeNameSearchValue)) {
+                    $(this).show();
+                } else {
+                    $(this).hide();
+                }
+            });
+        }
+    });
+</script>
+
+
+<style>
+
+    .table {
+        font-size: 13px;
+        border-spacing: 0 15px;
+        width: 100%;
+    }
+
+        .table th {
+            background-color: #f5f5f5;
+            font-weight: bold;
+        }
+
+        .table td {
+            background-color: #ffffff;
+            border: 1px solid #333;
+            padding: 10px;
+        }
+    /* Custom style for buttons */
+    .btn {
+        border-radius: 5px;
+        padding: 5px 10px;
+        text-decoration: none;
+        margin-right: 5px;
+        cursor: pointer;
+    }
+
+        /* Hover style for buttons */
+        .btn:hover {
+            text-decoration: underline;
+        }
+
+    /* Custom styles for button colors */
+    .btn-success {
+        background-color: #28a745; /* Green color for "Verify" button */
+        color: #fff; /* White text color */
+    }
+
+    .btn-danger {
+        background-color: #dc3545; /* Red color for "Reject" button */
+        color: #fff; /* White text color */
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+</style>
